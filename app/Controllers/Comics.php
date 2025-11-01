@@ -19,7 +19,7 @@ class Comics extends BaseController
     $comics = $this->comicModel->findAll();
     $data = [
       'title' => 'Comics List',
-      'comics' => $comics,
+      'comics' => $this->comicModel->getComics(),
     ];
     // conntection without using model
     // $db = \Config\Database::connect();
@@ -34,5 +34,18 @@ class Comics extends BaseController
     // dd($comic);
 
     return view('comics/index', $data);
+  }
+
+  public function detail($slug)
+  {
+    // $comic = $this->comicModel->getComics($slug);
+    // dd($comic);
+
+    $data = [
+      'title' => 'Comic Detail',
+      'comic' => $this->comicModel->getComics($slug),
+    ]; 
+
+    return view('comics/detail', $data);
   }
 }
