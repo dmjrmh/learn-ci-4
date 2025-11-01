@@ -9,9 +9,9 @@ class Pages extends BaseController
     $data = [
       'title' => 'Home Page',
     ];
-    echo view('layouts/header', $data);
-    echo view('pages/home');
-    echo view('layouts/footer');
+    // echo view('layouts/header', $data);
+    return view('pages/home', $data);
+    // echo view('layouts/footer');
   }
   public function about()
   {
@@ -20,15 +20,24 @@ class Pages extends BaseController
       'title' => 'About',
       'test' => [1, 2, 3, 4, 5]
     ];
-    echo view('layouts/header', $data);
-    echo view('pages/about');
-    echo view('layouts/footer');
+    return view('pages/about', $data);
   }
 
   public function contact()
   {
-    echo view('layouts/header');
-    echo view('pages/contact');
-    echo view('layouts/footer');
+    $data = [
+      'title' => 'Contact',
+      'address' => [
+        [
+          'type' => 'Home',
+          'address' => '123 Home Street, Hometown, HT 12345'
+        ],
+        [
+          'type' => 'Office',
+          'address' => '456 Office Blvd, Worktown, WT 67890'
+        ]
+      ]
+    ];
+    return view('pages/contact', $data);
   }
 }
