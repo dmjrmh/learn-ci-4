@@ -4,7 +4,13 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <a href="/comics/create" class="btn btn-primary mt-3">Create new Comic</a>
       <h1><?= $title ?></h1>
+      <?php if (session()->getFlashdata('message')): ?>
+        <div class="alert alert-success" role="alert">
+          <?= session()->getFlashdata('message'); ?>
+        </div>
+      <?php endif ?>
       <table class="table">
         <thead>
           <tr>
@@ -16,10 +22,10 @@
         </thead>
         <tbody>
           <?php $i = 1; ?>
-          <?php foreach($comics as $comic): ?>
+          <?php foreach ($comics as $comic): ?>
             <tr>
               <th scope="row"><?= $i++ ?></th>
-              <td><img src="/images/<?= $comic['cover'] ?>" alt="Naruto" class="cover-image"></td>
+              <td><img src="/images/<?= $comic['cover'] ?>" alt="<?= $comic['title']; ?>" class="cover-image"></td>
               <td><?= $comic['title'] ?></td>
               <td><a href="/comics/<?= $comic['slug']; ?>" class="btn btn-success">Detail</a></td>
             </tr>
