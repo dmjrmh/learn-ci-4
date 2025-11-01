@@ -14,7 +14,7 @@
               <h5 class="card-title"><?= $comic['title'] ?></h5>
               <h6 class="card-subtitle">Author: <?= $comic['author'] ?></h6>
               <p class="card-text">Publisher: <?= $comic['publisher'] ?></p>
-              <a href="" class="btn btn-warning">Edit</a>
+              <a href="/comics/edit/<?= $comic['slug'] ?>" class="btn btn-warning">Edit</a>
               <form action="/comics/delete/<?= $comic['id'] ?>" method="post" class="d-inline">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="_method" value="DELETE">
