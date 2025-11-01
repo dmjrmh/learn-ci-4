@@ -56,8 +56,10 @@ class Comics extends BaseController
 
   public function create()
   {
+    // session();
     $data = [
       'title' => 'Create Comic Form',
+      'validation' => \Config\Services::validation(),
     ];
 
     return view('comics/create', $data);
@@ -66,6 +68,17 @@ class Comics extends BaseController
   public function store()
   {
     // dd($this->request->getVar());
+
+    // validation input
+    if(!$this->validate([
+      'title' => 'required|is_unique[comics.title]',
+      'author' => 'required',
+      'publisher' => 'required',
+    ])){
+      $validation = \Config\Services::validation();
+      // dd($validation);
+      return redirect()->to('/comics/create')->withInput()->with('validation', $validation);
+    }
 
     $slug = url_title($this->request->getVar('title'), '-', true);
 
