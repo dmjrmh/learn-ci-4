@@ -15,7 +15,11 @@
               <h6 class="card-subtitle">Author: <?= $comic['author'] ?></h6>
               <p class="card-text">Publisher: <?= $comic['publisher'] ?></p>
               <a href="" class="btn btn-warning">Edit</a>
-              <a href="" class="btn btn-danger">Delete</a>
+              <form action="/comics/delete/<?= $comic['id'] ?>" method="post" class="d-inline">
+                <?= csrf_field(); ?>
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure ?')">Delete</button>
+              </form>
               <br>
               <a href="/comics" class="btn btn-primary mt-3">Back to Comics List</a>
             </div>

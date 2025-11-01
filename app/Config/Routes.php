@@ -41,6 +41,7 @@ $routes->get('/pages/contact', 'Pages::contact');
 $routes->get('/comics', 'Comics::index');
 $routes->get('/comics/create', 'Comics::create');
 $routes->post('/comics/store', 'Comics::store');
+$routes->delete('/comics/delete/(:num)', 'Comics::delete/$1');
 $routes->get('/comics/(:segment)', 'Comics::detail/$1');
 
 

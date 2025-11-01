@@ -95,4 +95,11 @@ class Comics extends BaseController
     return redirect()->to('/comics');
   }
 
+  public function delete($id)
+  {
+    $this->comicModel->delete($id);
+    session()->setFlashdata('message', "Comic deleted successfully");
+    return redirect()->to('/comics');
+  }
+
 }
