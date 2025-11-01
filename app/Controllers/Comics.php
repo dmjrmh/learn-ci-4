@@ -74,11 +74,35 @@ class Comics extends BaseController
       'title' => 'required|is_unique[comics.title]',
       'author' => 'required',
       'publisher' => 'required',
+      'cover' => [
+        'rules' => 'max_size[cover,1024]|is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/png]',
+        'errors' => [
+          'max_size' => 'The cover image size is too large. Maximum size is 1MB.',
+          'is_image' => 'The file you uploaded is not a valid image.',
+          'mime_in' => 'The cover image must be a file of type: jpg, jpeg, png.',
+        ],
+      ],
     ])) {
-      $validation = \Config\Services::validation();
+      // $validation = \Config\Services::validation();
       // dd($validation);
-      return redirect()->to('/comics/create')->withInput()->with('validation', $validation);
+      // return redirect()->to('/comics/create')->withInput()->with('validation', $validation);
+      return redirect()->to('/comics/create')->withInput();
     }
+
+    // dd('success');
+    // take picture
+    $fileCover = $this->request->getFile('cover');
+
+    if($fileCover->getError() == 4){
+      $nameCover = 'missing-cover.jpg';
+    } else {
+      // get file cover
+      $nameCover = $fileCover->getRandomName();
+
+      // move to folder images
+      $fileCover->move('images', $nameCover);
+    }
+
 
     $slug = url_title($this->request->getVar('title'), '-', true);
 
@@ -87,7 +111,7 @@ class Comics extends BaseController
       'slug' => $slug,
       'author' => $this->request->getVar('author'),
       'publisher' => $this->request->getVar('publisher'),
-      'cover' => $this->request->getVar('cover'),
+      'cover' => $nameCover,
     ]);
 
     session()->setFlashdata('message', "Comic " . $this->request->getVar('title') . " added successfully");
@@ -97,12 +121,21 @@ class Comics extends BaseController
 
   public function delete($id)
   {
+    $comic = $this->comicModel->find($id);
+
+    // check if cover is default
+    if($comic['cover'] != 'missing-cover.jpg'){
+      // delete image
+      unlink('images/'. $comic['cover']);
+    }
+
+
     $this->comicModel->delete($id);
     session()->setFlashdata('message', "Comic deleted successfully");
     return redirect()->to('/comics');
   }
 
-  public function edit($slug) 
+  public function edit($slug)
   {
     $data = [
       'title' => 'Edit Comic Form',

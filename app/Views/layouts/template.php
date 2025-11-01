@@ -18,6 +18,21 @@
   <?= $this->renderSection('content'); ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script>
+    function previewImage(){
+      const cover = document.querySelector('#cover');
+      const imagePreview = document.querySelector('.img-preview');
+  
+      // for update preview image
+      const coverFile = new FileReader();
+      coverFile.readAsDataURL(cover.files[0]);
+  
+      coverFile.onload = function(e) {
+        imagePreview.src = e.target.result;
+      }
+    }
+
+  </script>
 </body>
 
 </html>

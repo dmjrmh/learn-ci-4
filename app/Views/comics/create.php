@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-8">
       <h2 class="my-3">Form add new comic</h2>
-      <form action="/comics/store" method="post">
+      <form action="/comics/store" method="post" enctype="multipart/form-data">
         <?= csrf_field(); ?>
         <div class="row mb-3">
           <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -36,10 +36,15 @@
         </div>
         <div class="row mb-3">
           <label for="cover" class="col-sm-2 col-form-label">Cover</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control <?= ($validation->hasError('cover') ? 'is-invalid' : '') ?>" id="cover" name="cover" value="<?= old('cover') ?>">
-            <div class="invalid-feedback">
-              <?= $validation->getError('cover') ?>
+          <div class="col-sm-2">
+            <img src="/images/missing-cover.jpg" class="img-thumbnail img-preview">
+          </div>
+          <div class="col-sm-8">
+            <div class="mb-3">
+              <input class="form-control <?= ($validation->hasError('cover') ? 'is-invalid' : '') ?>" type="file" id="cover" name="cover" onchange="previewImage()">
+              <div class="invalid-feedback">
+                <?= $validation->getError('cover') ?>
+              </div>
             </div>
           </div>
         </div>
