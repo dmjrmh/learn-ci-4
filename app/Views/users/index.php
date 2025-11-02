@@ -5,6 +5,17 @@
   <div class="row">
     <div class="col">
       <h1><?= $title ?></h1>
+      <form action="" method="GET">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Input keyword ..." aria-describedby="button-addon2" name="keyword">
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+
       <table class="table">
         <thead>
           <tr>

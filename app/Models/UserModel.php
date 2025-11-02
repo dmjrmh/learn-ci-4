@@ -21,4 +21,12 @@ class UserModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
+
+  public function search($keyword) {
+    // $builder = $this->table('users');
+    // $builder->like('name', $keyword);
+    // return $builder;
+
+    return $this->table('users')->like('name', $keyword)->orLike('address', $keyword);
+  }
 }
